@@ -1,0 +1,17 @@
+{
+	"compilerOptions": {
+		"target": "ESNext",
+		"module": "ESNext",
+		"moduleResolution": "node",
+		"allowSyntheticDefaultImports": true,
+		"esModuleInterop": true,
+		"jsx": "preserve",
+		"composite": true,
+		"jsxImportSource": "solid-js",
+		"types": ["vite/client"],
+		"noEmit": false,
+		"isolatedModules": true
+	},
+	"include": ["solid/**/*"],
+	"exclude": ["node_modules", "dist"]
+}

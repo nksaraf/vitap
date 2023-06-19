@@ -1,0 +1,35 @@
+{
+  "name": "vitap",
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite dev",
+    "build:server": "vite build --ssr",
+    "build:client": "vite build"
+  },
+  "devDependencies": {
+    "@types/connect": "^3.4.35",
+    "@types/react": "^18.0.33",
+    "@types/react-dom": "^18.0.11",
+    "@vitejs/plugin-react": "^3.1.0",
+    "connect": "^3.7.0",
+    "fast-glob": "^3.2.12",
+    "fully-react": "^0.0.2",
+    "path-to-regexp": "^6.2.1",
+    "pathe": "^1.1.0",
+    "prisma": "^4.12.0",
+    "react": "0.0.0-experimental-efb381bbf-20230505",
+    "react-dom": "0.0.0-experimental-efb381bbf-20230505",
+    "react-server-dom-webpack": "0.0.0-experimental-efb381bbf-20230505",
+    "serve-static": "^1.15.0",
+    "typescript": "5.1.0-beta",
+    "vite": "^4.3",
+    "wouter": "^2.11.0"
+  },
+  "dependencies": {
+    "@solidjs/meta": "^0.28.5",
+    "@solidjs/router": "^0.8.2",
+    "solid-js": "^1.7.6",
+    "vite-plugin-solid": "^2.7.0"
+  }
+}
