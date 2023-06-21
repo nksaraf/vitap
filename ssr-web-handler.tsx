@@ -3,8 +3,8 @@ import { renderToReadableStream } from "react-dom/server.edge";
 import { Router } from "wouter";
 
 import lazyRoute from "./lib/react/lazy-route";
+import type { HandlerContext } from "./lib/types";
 import App from "./ssr-app";
-import type { HandlerContext } from "./types";
 
 export default async (event, context: HandlerContext) => {
 	const { manifest } = context;
@@ -25,7 +25,7 @@ export default async (event, context: HandlerContext) => {
 		<App>
 			<Router
 				ssrPath={new URL(event.request.url).pathname}
-				base={context.prefix}
+				base={import.meta.env.BASE_URL}
 			>
 				<Route />
 			</Router>
@@ -35,7 +35,7 @@ export default async (event, context: HandlerContext) => {
 				manifest["react-client"]?.inputs["./ssr-client.tsx"].output.path,
 			].filter(Boolean) as string[],
 			bootstrapScriptContent: `
-			window.base = "${context.prefix}"
+			window.base = "${import.meta.env.BASE_URL}"
 			window.manifest = ${JSON.stringify(manifestJSON)};`,
 		},
 	);

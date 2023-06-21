@@ -3,8 +3,8 @@ import { renderToPipeableStream } from "react-dom/server";
 import { Router } from "wouter";
 
 import lazyRoute from "./lib/react/lazy-route";
+import type { HandlerContext } from "./lib/types";
 import App from "./ssr-app";
-import type { HandlerContext } from "./types";
 
 export default async (request, response, context: HandlerContext) => {
 	const { manifest } = context;
@@ -16,7 +16,7 @@ export default async (request, response, context: HandlerContext) => {
 	const Route = lazyRoute(
 		context.match.filePath,
 		manifest["react-client"],
-		manifest["react-ssr"],
+		manifest[context.router.name],
 	);
 
 	const manifestJSON = await manifest["react-client"].json();

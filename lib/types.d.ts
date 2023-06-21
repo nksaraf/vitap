@@ -1,4 +1,4 @@
-import { FileSystemRouter } from "./FileSystemRouter";
+import { FileSystemRouter } from "./file-system-router";
 
 export type HandlerContext = {
 	manifest: {
