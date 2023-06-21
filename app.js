@@ -26,7 +26,7 @@ const app = new App({
 			plugins: [react()],
 		},
 		{
-			name: "solid-ssr",
+			name: "solid-ssr-node",
 			target: "node",
 			outDir: "./.build/solid",
 			plugins: [solid({ ssr: true })],
@@ -143,7 +143,7 @@ const app = new App({
 			name: "solid-ssr",
 			mode: "node-handler",
 			handler: "./solid/ssr-handler.tsx",
-			build: "solid-ssr",
+			build: "solid-ssr-node",
 			prefix: "/solid-ssr",
 			style: "nextjs",
 			dir: "./solid-router/pages",
@@ -172,6 +172,7 @@ const app = new App({
 if (process.argv.includes("--build")) {
 	await app.build();
 }
+
 if (process.argv.includes("--serve") || process.argv.includes("--dev")) {
 	await app.serve({
 		port: 3000,

@@ -1,3 +1,6 @@
+import { NextHandleFunction } from "connect";
+import { ViteDevServer } from "vite";
+
 import { FileSystemRouter } from "./file-system-router";
 
 export type HandlerContext = {
@@ -105,6 +108,7 @@ export type RouterConfig =
 			root?: string;
 			fileRouter?: FileSystemRouter;
 			index?: number;
+			devServer?: ViteDevServer;
 	  }
 	| {
 			name: string;
@@ -127,6 +131,7 @@ export type RouterConfig =
 			root?: string;
 			fileRouter?: FileSystemRouter;
 			index?: number;
+			devServer?: ViteDevServer;
 	  }
 	| {
 			name: string;
@@ -147,6 +152,7 @@ export type RouterConfig =
 			root?: string;
 			fileRouter?: FileSystemRouter;
 			index?: number;
+			devServer?: ViteDevServer;
 	  }
 	| {
 			/** The "build" mode is used to  */
@@ -168,6 +174,7 @@ export type RouterConfig =
 			root?: string;
 			fileRouter?: FileSystemRouter;
 			index?: number;
+			devServer?: ViteDevServer;
 	  };
 
 export type AppConfig = {
@@ -177,6 +184,11 @@ export type AppConfig = {
 };
 
 interface App {
+	createNodeMiddleware(
+		arg0: (req: any, res: any, next: any) => Promise<void>,
+		router: RouterConfig,
+	): NextHandleFunction;
+	createRequestId(): unknown;
 	readonly config: AppConfig;
 	getBundler(router: RouterConfig): BundlerConfig;
 	renderError(error: any): string;
