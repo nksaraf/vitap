@@ -6,7 +6,7 @@ export default function App({ children }) {
 			<head></head>
 			<body>
 				SSR
-				<a href="/_spa/hello">Main Home</a>
+				<a href="/_spa/hello">Main Home yo</a>
 				{children}
 			</body>
 		</html>

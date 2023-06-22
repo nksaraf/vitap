@@ -6,18 +6,8 @@ import makeCachedMatcher from "wouter/matcher";
 
 import manifest from "./lib/client-manifest";
 import getRoutes from "./lib/react/routes";
-import App from "./spa-app";
+import App from "./ssr-app";
 
-/*
- * This function specifies how strings like /app/:users/:items* are
- * transformed into regular expressions.
- *
- * Note: it is just a wrapper around `pathToRegexp`, which uses a
- * slightly different convention of returning the array of keys.
- *
- * @param {string} path — a path like "/:foo/:bar"
- * @return {{ keys: [], regexp: RegExp }}
- */
 const convertPathToRegexp = (path) => {
 	let keys = [];
 
@@ -27,15 +17,12 @@ const convertPathToRegexp = (path) => {
 };
 
 const customMatcher = makeCachedMatcher(convertPathToRegexp);
-let routes = getRoutes(manifest["react-spa"]);
-ReactDOM.createRoot(document.getElementById("app")!).render(
+let routes = getRoutes(manifest["react-rsc-client"]);
+
+ReactDOM.hydrateRoot(
+	document,
 	<App>
-		<Router
-			matcher={customMatcher}
-			base={
-				import.meta.env.BASE_URL === "/" ? undefined : import.meta.env.BASE_URL
-			}
-		>
+		<Router matcher={customMatcher} base={(window as any).base}>
 			{routes.map((route) => (
 				<Route path={route.path} key={route.path} component={route.component} />
 			))}

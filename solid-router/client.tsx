@@ -10,18 +10,18 @@ import { App } from "./App";
 let routes = getRoutes(manifest["solid-spa"]);
 
 render(
-	() => (
-		<App>
-			<MetaProvider>
-				<Router base={import.meta.env.BASE_URL}>
-					<Routes>
-						{routes.map((route) => (
-							<Route path={route.path} component={route.component} />
-						))}
-					</Routes>
-				</Router>
-			</MetaProvider>
-		</App>
-	),
-	document.getElementById("app")!,
+  () => (
+    <App>
+      <MetaProvider>
+        <Router base={import.meta.env.BASE_URL}>
+          <Routes>
+            {routes.map((route) => (
+              <Route path={route.path} component={route.component} />
+            ))}
+          </Routes>
+        </Router>
+      </MetaProvider>
+    </App>
+  ),
+  document.getElementById("app")!
 );
