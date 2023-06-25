@@ -15,6 +15,14 @@ export type HandlerContext = {
           };
         };
       };
+      chunks: {
+        [key: string]: {
+          assets(): Promise<{ [key: string]: any }>;
+          output: {
+            path: string;
+          };
+        };
+      };
     };
   };
   match: MatchedRoute;
@@ -73,111 +81,70 @@ export type BundlerConfig = {
    * added by the bundler itself
    */
   plugins?: () => import("vite").PluginOption[];
+};
 
-  resolve?: InlineConfig["resolve"];
+type UserRouterConfig = {
+  name: string;
+  build: string;
+  prefix?: string;
+  bundler?: BundlerConfig;
+  index?: number;
+  devServer?: ViteDevServer;
+  root?: string;
 };
 
 export type RouterConfig<T extends BundlerConfig = BundlerConfig> =
-  | {
-      name: string;
-      mode: "static";
+  UserRouterConfig &
+    (
+      | {
+          mode: "static";
+          /** The directory containing the static files to serve */
+          dir: string;
+        }
+      | {
+          mode: "handler";
+          handler: string;
+          /** The directory containing the static files to serve */
+          dir?: string;
+          /** File routing style to use for the files in `dir` */
+          style?: string;
+          /** Limit the file routing to the given extensions */
+          extensions?: string[];
+        }
+      | {
+          mode: "spa";
+          handler?: string;
+          /** The directory containing the static files to serve */
+          dir?: string;
+          /** File routing style to use for the files in `dir` */
+          style?: string;
+          /** Limit the file routing to the given extensions */
+          extensions?: string[];
+          public?: string;
+        }
+      | {
+          mode: "node-handler";
+          handler: string;
+          /** The directory containing the static files to serve */
+          dir?: string;
+          /** File routing style to use for the files in `dir` */
+          style?: string;
+          /** Limit the file routing to the given extensions */
+          extensions?: string[];
+        }
+      | {
+          /** The "build" mode is used to  */
+          mode: "build";
+          handler: string;
 
-      /** The directory containing the static files to serve */
-      dir: string;
-
-      /** The base path to use when routing */
-      prefix?: string;
-
-      build: T["name"];
-      index?: number;
-    }
-  | {
-      name: string;
-      mode: "handler";
-
-      handler: string;
-
-      /** The directory containing the static files to serve */
-      dir?: string;
-      /** File routing style to use for the files in `dir` */
-      style?: string;
-      /** Limit the file routing to the given extensions */
-      extensions?: string[];
-
-      /** The base path to use when routing */
-      prefix?: string;
-      build: T["name"];
-      root?: string;
-      fileRouter?: FileSystemRouter;
-      index?: number;
-      devServer?: ViteDevServer;
-    }
-  | {
-      name: string;
-      mode: "spa";
-
-      handler?: string;
-
-      /** The directory containing the static files to serve */
-      dir?: string;
-      /** File routing style to use for the files in `dir` */
-      style?: string;
-      /** Limit the file routing to the given extensions */
-      extensions?: string[];
-
-      public?: string;
-
-      /** The base path to use when routing */
-      prefix?: string;
-      build: T["name"];
-      root?: string;
-      fileRouter?: FileSystemRouter;
-      index?: number;
-      devServer?: ViteDevServer;
-    }
-  | {
-      name: string;
-      mode: "node-handler";
-
-      handler: string;
-
-      /** The directory containing the static files to serve */
-      dir?: string;
-      /** File routing style to use for the files in `dir` */
-      style?: string;
-      /** Limit the file routing to the given extensions */
-      extensions?: string[];
-
-      /** The base path to use when routing */
-      prefix?: string;
-      build: T["name"];
-      root?: string;
-      fileRouter?: FileSystemRouter;
-      index?: number;
-      devServer?: ViteDevServer;
-    }
-  | {
-      /** The "build" mode is used to  */
-      name: string;
-      mode: "build";
-
-      handler: string;
-
-      /** The directory containing the static files to serve */
-      dir?: string;
-      /** File routing style to use for the files in `dir` */
-      style?: string;
-      /** Limit the file routing to the given extensions */
-      extensions?: string[];
-
-      /** The base path to use when routing */
-      prefix?: string;
-      build: T["name"];
-      root?: string;
-      fileRouter?: FileSystemRouter;
-      index?: number;
-      devServer?: ViteDevServer;
-    };
+          /** The directory containing the static files to serve */
+          dir?: string;
+          /** File routing style to use for the files in `dir` */
+          style?: string;
+          /** Limit the file routing to the given extensions */
+          extensions?: string[];
+        }
+    );
 
 export type AppConfig<
   T extends BundlerConfig = BundlerConfig,

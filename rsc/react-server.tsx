@@ -1,13 +1,10 @@
-import React from "react";
-import { renderToReadableStream } from "react-dom/server.edge";
-import { Router } from "wouter";
-
-import lazyRoute from "./lib/react/lazy-route";
-import type { HandlerContext } from "./lib/types";
-import App from "./ssr-app";
+import type { HandlerContext } from "../lib/types";
+import App from "../ssr-app";
 import * as ReactServerDOM from "react-server-dom-vite/server";
+import { renderAsset } from "../lib/react/render-asset";
+import Counter from "../Counter";
 
-export default async (event, context: HandlerContext) => {
+export default async (event, response, context: HandlerContext) => {
   const { manifest } = context;
 
   // if (!context.match) {
@@ -21,9 +18,6 @@ export default async (event, context: HandlerContext) => {
   // );
 
   // const manifestJSON = await manifest["react-rsc-client"].json();
-  // const assets = await manifest["react-rsc-client"]?.inputs[
-  //   "rsc-ssr-client.tsx"
-  // ].assets();
 
   // const htmlStream = await renderToReadableStream(
   //   <App>
@@ -48,9 +42,16 @@ export default async (event, context: HandlerContext) => {
   //   }
   // );
 
-  return ReactServerDOM.renderToPipeableStream(
+  const clientManifest = manifest["react-rsc-client"];
+  const assets = await clientManifest?.inputs[clientManifest.handler].assets();
+
+  const { pipe } = ReactServerDOM.renderToPipeableStream(
     <App>
+      {assets.map(renderAsset)}
       <div>Hello World</div>
+      <Counter />
     </App>
   );
+
+  pipe(response);
 };
