@@ -12,7 +12,6 @@ const routes = getRoutes(manifest["solid-client"]).map((route) => ({
   component: route.component,
 }));
 
-console.log(routes);
 
 const FileRoutes = () => {
   return routes as any;

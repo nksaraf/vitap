@@ -20,7 +20,6 @@ export default function lazyRoute(id, clientManifest, serverManifest) {
         /* @vite-ignore */ manifest.inputs[id].output.path
       );
       let assets = await clientManifest.inputs?.[id].assets();
-      console.log(Component, assets);
 
       const styles = assets.filter((asset) => asset.tag === "style");
       if (typeof window !== "undefined" && import.meta.hot) {

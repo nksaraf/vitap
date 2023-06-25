@@ -41,7 +41,6 @@ export default async (request, response, context: HandlerContext) => {
     "./solid/ssr-client.tsx"
   ].assets();
 
-  console.log(assets);
 
   const tags = [];
 
