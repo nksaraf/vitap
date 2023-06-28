@@ -82,31 +82,33 @@ const app = createApp({
       name: "react-client",
       target: "browser",
       outDir: "./.build/client",
-      plugins: () => [react(), client()],
+      plugins: () => [react()],
     },
     {
       name: "solid-client",
       target: "browser",
       outDir: "./.build/solid-client",
-      plugins: () => [solid({ ssr: true }), client()],
+      plugins: () => [solid({ ssr: true })],
     },
     {
       name: "react-spa",
       target: "browser",
       outDir: "./.build/spa",
-      plugins: () => [react(), client()],
+      plugins: () => [react()],
     },
     {
       name: "solid-spa",
       target: "browser",
       outDir: "./.build/solid-spa",
-      plugins: () => [solid(), client()],
+      plugins: () => [solid()],
     },
     {
       name: "react-rsc",
       target: "node",
       outDir: "./.build/rsc",
-      conditions: ["react-server"],
+      resolve: {
+        conditions: ["node", "import", "react-server", process.env.NODE_ENV],
+      },
       ssr: {
         noExternal: true,
         external: ["react", "react-dom", "react-server-dom-vite"],
@@ -125,8 +127,9 @@ const app = createApp({
     {
       name: "react-rsc-client",
       target: "browser",
+
       outDir: "./.build/rsc",
-      plugins: () => [react(), client()],
+      plugins: () => [react()],
     },
   ],
   routers: [

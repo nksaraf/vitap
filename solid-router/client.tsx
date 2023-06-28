@@ -3,7 +3,7 @@ import { MetaProvider } from "@solidjs/meta";
 import { Route, Router, Routes } from "@solidjs/router";
 import { NoHydration, render } from "solid-js/web";
 
-import manifest from "../lib/client-manifest";
+import manifest from "../lib/manifest/client-manifest";
 import getRoutes from "../lib/solid/routes";
 import { App } from "./App";
 

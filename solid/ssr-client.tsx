@@ -3,7 +3,7 @@ import { MetaProvider } from "@solidjs/meta";
 import { Route, Router, Routes } from "@solidjs/router";
 import { NoHydration, Suspense, hydrate, render } from "solid-js/web";
 
-import manifest from "../lib/client-manifest";
+import manifest from "../lib/manifest/client-manifest";
 import getRoutes from "../lib/solid/routes";
 import App from "./ssr-app";
 
@@ -11,7 +11,6 @@ const routes = getRoutes(manifest["solid-client"]).map((route) => ({
   path: route.path,
   component: route.component,
 }));
-
 
 const FileRoutes = () => {
   return routes as any;

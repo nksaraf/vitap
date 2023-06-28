@@ -47,12 +47,6 @@ export default async (request, response, context: HandlerContext) => {
   writableStream.setHeader = () => {};
 
   writableStream.on("finish", () => {
-    // parentPort?.postMessage(
-    //   JSON.stringify({
-    //     chunk: "end",
-    //     id: rest.id,
-    //   })
-    // );
     readable.push(null);
     readable.destroy();
   });
@@ -69,16 +63,9 @@ export default async (request, response, context: HandlerContext) => {
       bootstrapModules: [
         clientManifest?.inputs[clientManifest.handler].output.path,
       ].filter(Boolean) as string[],
-      bootstrapScriptContent: `
-			window.base = "${import.meta.env.BASE_URL}";`,
+      bootstrapScriptContent: `window.base = "${import.meta.env.BASE_URL}";`,
     }
   );
 
   pipe(response);
-
-  // return new Response(htmlStream, {
-  //   headers: {
-  //     "content-type": "text/html",
-  //   },
-  // });
 };
